@@ -26,8 +26,9 @@ export default defineConfig((/* ctx */) => {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      // 'roboto-font' removido: evita 3 peticiones de fuente bloqueantes sin
+      // font-display. El texto usa el stack de fuentes del sistema (fallback de Quasar).
+      'material-icons', // requerido por los iconos de la UI
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
@@ -87,8 +88,9 @@ export default defineConfig((/* ctx */) => {
     framework: {
       config: {},
 
+      lang: 'es',
+
       // iconSet: 'material-icons', // Quasar icon set
-      // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),

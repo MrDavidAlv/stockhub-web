@@ -25,8 +25,8 @@
       <template v-slot:body-cell-acciones="props">
         <q-td :props="props" class="q-gutter-xs">
           <template v-if="authStore.isAdmin">
-            <q-btn flat round dense icon="edit" color="primary" @click="openForm(props.row)" />
-            <q-btn flat round dense icon="delete" color="negative" @click="confirmDelete(props.row)" />
+            <q-btn flat round dense icon="edit" color="primary" aria-label="Editar empresa" @click="openForm(props.row)" />
+            <q-btn flat round dense icon="delete" color="negative" aria-label="Eliminar empresa" @click="confirmDelete(props.row)" />
           </template>
         </q-td>
       </template>

@@ -53,8 +53,8 @@
       </template>
       <template v-slot:body-cell-acciones="props">
         <q-td :props="props" class="q-gutter-xs">
-          <q-btn flat round dense icon="edit" color="primary" @click="openForm(props.row)" />
-          <q-btn flat round dense icon="delete" color="negative" @click="confirmDelete(props.row)" />
+          <q-btn flat round dense icon="edit" color="primary" aria-label="Editar producto" @click="openForm(props.row)" />
+          <q-btn flat round dense icon="delete" color="negative" aria-label="Eliminar producto" @click="confirmDelete(props.row)" />
         </q-td>
       </template>
     </q-table>

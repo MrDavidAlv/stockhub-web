@@ -47,7 +47,7 @@
         />
       </div>
       <div class="col-2 text-right">
-        <q-btn flat round dense icon="delete" color="negative" @click="remove(idx)" />
+        <q-btn flat round dense icon="delete" color="negative" aria-label="Quitar precio" @click="remove(idx)" />
       </div>
     </div>
   </div>
