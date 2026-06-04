@@ -22,16 +22,22 @@
         icon="download"
         label="Descargar PDF"
         :loading="downloading"
+        :disable="!hasInventario"
         @click="onDownload"
         unelevated
-      />
+      >
+        <q-tooltip v-if="!hasInventario">Sin productos para exportar</q-tooltip>
+      </q-btn>
       <q-btn
         color="primary"
         icon="mail"
         label="Enviar por email"
-        @click="showEmail = true"
+        :disable="!hasInventario"
+        @click="openEmailDialog"
         unelevated
-      />
+      >
+        <q-tooltip v-if="!hasInventario">Sin productos para enviar</q-tooltip>
+      </q-btn>
     </div>
 
     <q-table
@@ -95,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useQuasar, type QTableProps } from 'quasar';
 import { inventarioService } from 'src/services/inventario.service';
 import { empresaService } from 'src/services/empresa.service';
@@ -105,6 +111,7 @@ import { getApiErrorMessage } from 'src/utils/error';
 const $q = useQuasar();
 
 const productos = ref<Producto[]>([]);
+const hasInventario = computed(() => productos.value.length > 0);
 const empresaOptions = ref<{ value: string; label: string }[]>([]);
 const filtroEmpresa = ref<string | null>(null);
 const loading = ref(false);
@@ -141,7 +148,28 @@ async function loadEmpresas() {
   }
 }
 
+function openEmailDialog() {
+  if (!hasInventario.value) {
+    warnEmpty();
+    return;
+  }
+  showEmail.value = true;
+}
+
+function warnEmpty() {
+  $q.notify({
+    type: 'warning',
+    message: 'El inventario esta vacio. Crea productos antes de descargar o enviar.',
+    icon: 'warning',
+    timeout: 4000,
+  });
+}
+
 async function onDownload() {
+  if (!hasInventario.value) {
+    warnEmpty();
+    return;
+  }
   downloading.value = true;
   try {
     const blob = await inventarioService.downloadPdf(filtroEmpresa.value);
@@ -159,6 +187,10 @@ async function onDownload() {
 }
 
 async function onSendEmail() {
+  if (!hasInventario.value) {
+    warnEmpty();
+    return;
+  }
   sending.value = true;
   try {
     await inventarioService.sendByEmail({
