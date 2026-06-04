@@ -1,0 +1,14 @@
+node_modules
+dist
+.quasar
+.git
+.gitignore
+.dockerignore
+Dockerfile
+.env
+.env.*
+*.log
+README.md
+.vscode
+.idea
+cypress
